@@ -1,0 +1,17 @@
+<div class="container d-flex justify-content-center p-5">
+  <form style="max-width: 500px; flex: 1;" (submit)="onSubmit($event)" >
+    <h2>Contattaci</h2>
+    <div class="form-group">
+      <label for="emailInput">Email</label>
+      <input autocomplete="email" class="form-control" id="emailInput" placeholder="Inserisci qui il tuo indirizzo email" [formControl]="email">
+    </div>
+    <div class="form-group">
+      <label for="messageInput">Il tuo messaggio</label>
+      <textarea class="form-control" id="messageInput" rows="3" [formControl]="message"></textarea>
+    </div>
+    <div class="d-flex flex-row-reverse gap-1 mt-1">
+      <button type="submit" class="btn btn-primary">Invia</button>
+      <button [routerLink]="'/'" type="button" class="btn btn-secondary">Annulla</button>
+    </div>
+  </form>
+</div>

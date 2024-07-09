@@ -1,0 +1,53 @@
+<div class="container mt-1">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/courses', course?.id]" aria-current="page">Dettagli</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" [routerLink]="['/courses', course?.id, 'posts']">Post</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/courses', course?.id, 'tasks']">Task</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/courses', course?.id, 'students']">Studenti</a>
+    </li>
+  </ul>
+</div>
+<div *ngIf="!authorized" class="container p-3">
+  <div class="alert alert-danger" role="alert">
+    Non sei autorizzato a visualizzare i post di questo corso
+  </div>
+</div>
+<div *ngIf="authorized" class="container p-3 d-flex flex-column gap-1">
+  <div class="card">
+    <div class="card-header">
+      Nuovo post
+    </div>
+    <form (submit)="onSubmitPost($event)" class="card-body d-flex flex-column gap-1">
+      <div class="form-group">
+        <label for="contentInput">Contenuto del post</label>
+        <textarea [formControl]="newPostContent" class="form-control" id="contentInput" rows="5"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="attachmentsInput" class="form-label">Allegati</label>
+        <input [formControl]="fileControl" (change)="onFileInputChange($event)" class="form-control" type="file" id="attachmentsInput" multiple>
+      </div>
+      <div class="d-flex flex-row-reverse gap-1">
+        <button type="reset" class="btn btn-secondary">Annulla</button>
+        <button type="submit" class="btn btn-primary">Invia</button>
+      </div>
+    </form>
+  </div>
+  <div *ngFor="let post of posts" class="card">
+    <div class="card-header">
+      {{post?.userId ? userCache[post.userId!]?.username : "Deleted user"}}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ post?.createdAt }}</h5>
+      <p class="card-text">{{post?.content}}</p>
+      <img *ngFor="let attachmentFileId of post?.attachmentFileIds; index as i" src="http://localhost:8080/api/courses/{{course?.id}}/posts/{{post?.id}}/attachments/{{i}}" width="256" height="256" />
+    </div>
+  </div>
+</div>
+

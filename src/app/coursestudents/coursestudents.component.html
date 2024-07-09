@@ -1,0 +1,29 @@
+<div class="container mt-1">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/courses', course?.id]" aria-current="page">Dettagli</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/courses', course?.id, 'posts']">Post</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/courses', course?.id, 'tasks']">Task</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" [routerLink]="['/courses', course?.id, 'students']">Studenti</a>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="!authorized" class="container p-3">
+  <div class="alert alert-danger" role="alert">
+    Non sei autorizzato a visualizzare i dettagli di questo corso
+  </div>
+</div>
+<div *ngIf="authorized" class="container p-3">
+  <h2>Studenti iscritti ({{course?.userIds?.length}})</h2>
+  <ul class="list-group">
+    <li *ngFor="let userId of course?.userIds" class="list-group-item">{{userCache[userId!].username}}</li>
+  </ul>
+</div>
+
