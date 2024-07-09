@@ -1,0 +1,22 @@
+<div *ngIf="loading" class="container mt-1">
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>
+<div *ngIf="!loading" class="container mt-1">
+  <div *ngIf="user()" class="container p-2 d-flex flex-row align-items-center">
+    <h2>I tuoi corsi</h2>
+    <button [routerLink]="'/courses/new'" type="button" style="margin-left: auto;" class="btn btn-primary">Crea corso</button>
+  </div>
+  <div *ngIf="user()" class="row gap-1">
+    <app-course class="col-sm d-flex justify-content-center align-items-center justify-content-lg-start align-items-lg-start" *ngFor="let course of myCourses" [course]="course"></app-course>
+  </div>
+  <div class="container p-2 d-flex flex-row align-items-center">
+    <h2>Tutti i corsi</h2>
+  </div>
+  <div class="row gap-1">
+    <app-course class="col-sm d-flex justify-content-center align-items-center justify-content-lg-start align-items-lg-start" *ngFor="let course of courses" [course]="course"></app-course>
+  </div>
+</div>

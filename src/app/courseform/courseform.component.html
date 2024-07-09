@@ -1,0 +1,33 @@
+<div class="container d-flex justify-content-center p-5">
+  <form style="max-width: 500px; flex: 1;" (submit)="onSubmit($event)" >
+    <h2>Crea corso</h2>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Categoria</label>
+      <select class="form-control form-control-lg" [formControl]="categoryId">
+        <option value="0">Frontend</option>
+        <option value="1">Backend</option>
+        <option value="2">Fullstack</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="nameInput">Nome</label>
+      <input class="form-control" id="nameInput" placeholder="Inserisci qui il nome del corso" [formControl]="name">
+    </div>
+    <div class="form-group">
+      <label for="maxSlotsInput">Massimo partecipanti</label>
+      <input type="number" class="form-control" id="maxSlotsInput" placeholder="Inserisci qui il numero massimo di partecipanti" [formControl]="maxParticipants">
+    </div>
+    <div class="form-group">
+      <label for="descriptionInput">Descrizione</label>
+      <textarea class="form-control" id="descriptionInput" rows="3" [formControl]="description"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="bannerInput" class="form-label">Inserisci un banner</label>
+      <input class="form-control" type="file" id="bannerInput" [formControl]="banner">
+    </div>
+    <div class="d-flex flex-row-reverse gap-1 mt-1">
+      <button type="submit" class="btn btn-primary">Crea</button>
+      <button [routerLink]="'/courses'" type="button" class="btn btn-secondary">Annulla</button>
+    </div>
+  </form>
+</div>
