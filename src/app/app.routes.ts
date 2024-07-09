@@ -10,6 +10,7 @@ import {ContactpageComponent} from "./contactpage/contactpage.component";
 import {CoursepostsComponent} from "./courseposts/courseposts.component";
 import {CoursestudentsComponent} from "./coursestudents/coursestudents.component";
 import {CoursetasksComponent} from "./coursetasks/coursetasks.component";
+import {ContactadminComponent} from "./contactadmin/contactadmin.component";
 
 export const routes: Routes = [
 {
@@ -51,6 +52,10 @@ export const routes: Routes = [
 {
   path: 'contact',
   component: ContactpageComponent
+},
+{
+  path: 'admin/contact',
+  component: ContactadminComponent
 },
 {
   path: 'register',

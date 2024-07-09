@@ -8,6 +8,7 @@ export interface ICourse {
   categoryId: string,
   description: string,
   id: string,
+  maxParticipants: number,
   userIds: string[]
 }
 
@@ -91,5 +92,38 @@ export class CourseService {
     });
 
     return this.courseObservableCache[id];
+  }
+
+  createCourse(name: string, categoryId: string, description: string, maxParticipants: number, banner: File): Observable<ICourse> {
+    let formData = new FormData();
+    formData.append("data", JSON.stringify({
+      name,
+      categoryId,
+      description,
+      maxParticipants
+    }));
+    formData.append("banner", banner);
+
+    return this.httpClient.post<ICourse>("http://localhost:8080/api/courses", formData, {
+      headers: {
+        "Authorization": `Bearer ${this.token}`
+      }
+    });
+  }
+
+  subscribeToCourse(courseId: string): Observable<void> {
+    return this.httpClient.post<void>(`http://localhost:8080/api/courses/${courseId}/subscribe`, {}, {
+      headers: {
+        "Authorization": `Bearer ${this.token}`
+      }
+    }).pipe(share());
+  }
+
+  unsubscribeFromCourse(courseId: string): Observable<void> {
+    return this.httpClient.post<void>(`http://localhost:8080/api/courses/${courseId}/unsubscribe`, {}, {
+      headers: {
+        "Authorization": `Bearer ${this.token}`
+      }
+    }).pipe(share());
   }
 }

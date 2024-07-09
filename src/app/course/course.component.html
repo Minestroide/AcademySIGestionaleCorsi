@@ -2,8 +2,10 @@
   <img class="card-img-top" src="http://localhost:8080/api/courses/{{course?.id}}/banner" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">{{course?.name}}</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <p>{{course?.userIds?.length}}/{{course?.maxParticipants}} studenti</p>
+    <p *ngIf="course?.description" class="card-text">{{course?.description}}</p>
+    <p *ngIf="!course?.description">Nessuna descrizione impostata.</p>
     <a *ngIf="subscribed" [routerLink]="['/courses/', course?.id]" class="btn btn-primary">Vai al corso</a>
-    <a *ngIf="!subscribed" class="btn btn-primary">Iscriviti al corso</a>
+    <a *ngIf="!subscribed" (click)="subscribeToCourse($event)" class="btn btn-primary">Iscriviti al corso</a>
   </div>
 </div>

@@ -1,10 +1,10 @@
 import {Component, effect, Input, OnChanges, OnInit, signal, SimpleChanges, WritableSignal} from '@angular/core';
 import axios from "axios";
-import {CourseService, ICourse} from "../course.service";
+import {CourseService, ICourse} from "../services/course.service";
 import {CourseComponent} from "../course/course.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {RouterLink} from "@angular/router";
-import {IUser, UserService} from "../user.service";
+import {IUser, UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-courses',

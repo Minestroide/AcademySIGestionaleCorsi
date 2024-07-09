@@ -1,7 +1,7 @@
 import {Component, effect, OnInit, signal, WritableSignal} from '@angular/core';
-import {CourseService, ICourse} from "../course.service";
-import {CoursePostService, ICoursePost} from "../coursepost.service";
-import {IUser, UserService} from "../user.service";
+import {CourseService, ICourse} from "../services/course.service";
+import {CoursePostService, ICoursePost} from "../services/coursepost.service";
+import {IUser, UserService} from "../services/user.service";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {FormControl} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
@@ -35,9 +35,7 @@ export class CoursestudentsComponent implements OnInit {
     this.userService = userService;
 
     effect(() => {
-      console.info(this.update());
       if(this.user()) {
-        console.info("User is logged in.")
         this.authorized = true;
 
         this.activatedRoute.params.subscribe((params) => {

@@ -1,12 +1,15 @@
-<div class="container d-flex justify-content-center p-5">
+<div *ngIf="!user()" class="container d-flex justify-content-center p-5">
+  <div class="alert alert-danger" role="alert">
+    Non sei autorizzato a creare un corso
+  </div>
+</div>
+<div *ngIf="!!user()" class="container d-flex justify-content-center p-5">
   <form style="max-width: 500px; flex: 1;" (submit)="onSubmit($event)" >
     <h2>Crea corso</h2>
     <div class="form-group">
-      <label for="exampleInputPassword1">Categoria</label>
-      <select class="form-control form-control-lg" [formControl]="categoryId">
-        <option value="0">Frontend</option>
-        <option value="1">Backend</option>
-        <option value="2">Fullstack</option>
+      <label for="categoryInput">Categoria</label>
+      <select id="categoryInput" class="form-control form-control-lg" [formControl]="categoryId">
+        <option *ngFor="let category of categories" value="{{ category?.id }}">{{ category?.name }}</option>
       </select>
     </div>
     <div class="form-group">
@@ -23,7 +26,7 @@
     </div>
     <div class="form-group">
       <label for="bannerInput" class="form-label">Inserisci un banner</label>
-      <input class="form-control" type="file" id="bannerInput" [formControl]="banner">
+      <input (change)="onBannerChange($event)" class="form-control" type="file" id="bannerInput" [formControl]="banner">
     </div>
     <div class="d-flex flex-row-reverse gap-1 mt-1">
       <button type="submit" class="btn btn-primary">Crea</button>

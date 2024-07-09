@@ -20,7 +20,46 @@
     Non sei autorizzato a visualizzare i dettagli di questo corso
   </div>
 </div>
-<div *ngIf="authorized" class="container p-3">
+<div *ngIf="authorized" class="container p-3 d-flex flex-column gap-2">
   <h2>Task da svolgere</h2>
+
+  <div class="card border-success">
+    <div class="card-header">
+      Nuovo post
+    </div>
+    <form (submit)="onSubmitTask($event)" class="card-body d-flex flex-column gap-1">
+      <div class="form-group">
+        <label for="titleInput">Titolo della task</label>
+        <input [formControl]="newTaskTitle" type="email" class="form-control" id="titleInput" aria-describedby="emailHelp" placeholder="Nome task">
+      </div>
+      <div class="form-group">
+        <label for="contentInput">Contenuto della task</label>
+        <textarea [formControl]="newTaskContent" class="form-control" id="contentInput" rows="5"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="expirationInput">Scadenza</label>
+        <input type="datetime-local" [formControl]="newTaskExpiration" class="form-control" id="expirationInput" placeholder="Scadenza">
+      </div>
+      <div class="mb-3">
+        <label for="attachmentsInput" class="form-label">Allegati</label>
+        <input [formControl]="fileControl" (change)="onFileInputChange($event)" class="form-control" type="file" id="attachmentsInput" multiple>
+      </div>
+      <div class="d-flex flex-row-reverse gap-1">
+        <button type="reset" class="btn btn-secondary">Annulla</button>
+        <button type="submit" class="btn btn-primary">Invia</button>
+      </div>
+    </form>
+  </div>
+  <div *ngFor="let task of tasks" class="card">
+    <div class="card-header">
+      {{task?.userId ? userCache[task.userId!]?.username : "Deleted user"}}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ task?.createdAt }}</h5>
+      <p class="card-text">Scadenza: {{task?.expiration}}</p>
+      <p class="card-text">{{task?.content}}</p>
+      <img *ngFor="let attachmentFileId of task?.attachmentFileIds; index as i" src="http://localhost:8080/api/courses/{{course?.id}}/tasks/{{task?.id}}/attachments/{{i}}" width="256" height="256" />
+    </div>
+  </div>
 </div>
 

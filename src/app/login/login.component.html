@@ -16,10 +16,8 @@
         Invalid credentials.
       </div>
     </div>
-    <a [routerLink]="'/passwordreset'">Ripristina la password</a><br><br>
-    <div class="d-flex flex-row-reverse gap-1 mt-1">
-      <a [routerLink]="'/register'">Registra un nuovo account</a>
-    </div>
+    <span>Password dimenticata? <a [routerLink]="'/passwordreset'">Clicca qui</a></span><br><br>
+    <span>Non hai un account? <a [routerLink]="'/register'">Registrati qui</a></span>
     <div class="d-flex flex-row-reverse gap-1 mt-1">
       <button [disabled]="!this.username.value || !this.password.value" type="submit" class="btn btn-primary">Accedi</button>
       <button [routerLink]="'/'" type="button" class="btn btn-secondary">Annulla</button>

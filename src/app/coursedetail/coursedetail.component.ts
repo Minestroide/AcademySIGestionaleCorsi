@@ -1,6 +1,6 @@
 import {Component, effect, Input, OnInit, signal, Signal, WritableSignal} from '@angular/core';
-import {CourseService, ICourse} from "../course.service";
-import {IUser, UserService} from "../user.service";
+import {CourseService, ICourse} from "../services/course.service";
+import {IUser, UserService} from "../services/user.service";
 import {ActivatedRoute, Route, Router, RouterLink} from "@angular/router";
 import {NgIf} from "@angular/common";
 

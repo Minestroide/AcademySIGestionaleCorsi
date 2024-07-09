@@ -23,7 +23,7 @@
 <div *ngIf="authorized" class="container p-3">
   <h2>Studenti iscritti ({{course?.userIds?.length}})</h2>
   <ul class="list-group">
-    <li *ngFor="let userId of course?.userIds" class="list-group-item">{{userCache[userId!].username}}</li>
+    <li *ngFor="let userId of course?.userIds" class="list-group-item">{{userCache[userId!]?.username}}</li>
   </ul>
 </div>
 

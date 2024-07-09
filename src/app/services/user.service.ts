@@ -7,7 +7,8 @@ export interface IUser {
   name: string,
   surname: string,
   username: string,
-  id: string
+  id: string,
+  roleIds: string[]
 }
 
 @Injectable({

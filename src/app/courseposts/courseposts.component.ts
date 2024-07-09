@@ -1,10 +1,10 @@
 import {Component, effect, OnInit, signal, WritableSignal} from '@angular/core';
-import {CourseService, ICourse} from "../course.service";
-import {IUser, UserService} from "../user.service";
+import {CourseService, ICourse} from "../services/course.service";
+import {IUser, UserService} from "../services/user.service";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
-import {CoursePostService, ICoursePost} from "../coursepost.service";
+import {CoursePostService, ICoursePost} from "../services/coursepost.service";
 
 @Component({
   selector: 'app-courseposts',
@@ -43,9 +43,9 @@ export class CoursepostsComponent implements OnInit {
     this.coursePostService = coursePostService;
 
     effect(() => {
-      console.info(this.update());
+      console.info("Updating course posts...");
+      this.update();
       if(this.user()) {
-        console.info("User is logged in.")
         this.authorized = true;
 
         this.activatedRoute.params.subscribe((params) => {
@@ -100,7 +100,7 @@ export class CoursepostsComponent implements OnInit {
       this.fileControl.setValue('');
       this.newPostFiles = [];
       this.coursePostService.clearCache();
-      this.update.set(this.update() + 1);
+      this.update.update((x) => x + 1);
     });
   }
 }
