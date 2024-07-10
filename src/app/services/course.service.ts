@@ -119,6 +119,14 @@ export class CourseService {
     }).pipe(share());
   }
 
+  kickUserFromCourse(courseId: string, userId: string): Observable<void> {
+    return this.httpClient.delete<void>(`http://localhost:8080/api/courses/${courseId}/users/${userId}`, {
+      headers: {
+        "Authorization": `Bearer ${this.token}`
+      }
+    }).pipe(share());
+  }
+
   unsubscribeFromCourse(courseId: string): Observable<void> {
     return this.httpClient.post<void>(`http://localhost:8080/api/courses/${courseId}/unsubscribe`, {}, {
       headers: {

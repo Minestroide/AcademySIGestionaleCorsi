@@ -67,4 +67,13 @@ export class CoursestudentsComponent implements OnInit {
     });
 
   }
+
+  deleteStudent(event: MouseEvent, userId: string) {
+    console.info("Deleting student with ID: " + userId);
+    if(!this.course) return;
+
+    this.courseService.kickUserFromCourse(this.course.id, userId).subscribe(() => {
+      this.course?.userIds.splice(this.course.userIds.indexOf(userId), 1);
+    });
+  }
 }

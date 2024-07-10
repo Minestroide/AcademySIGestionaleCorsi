@@ -65,6 +65,31 @@ export class UserService {
     return this.selfUserObservable;
   }
 
+  register(username: string, email: string, password: string, name: string, surname: string) {
+    return this.httpClient.post("http://localhost:8080/api/users", {
+      username,
+      email,
+      password,
+      name,
+      surname
+    });
+  }
+
+  edit(username: string, email: string, password: string, name: string, surname: string, id: string) {
+    return this.httpClient.patch("http://localhost:8080/api/users/@me", {
+      username,
+      email,
+      password,
+      name,
+      surname,
+      id
+    }, {
+      headers: {
+        "Authorization": `Bearer ${this.token}`
+      }
+    });
+  }
+
   getUser(userId: string): Observable<IUser> {
     if(this.usersCache[userId]) {
       return new Observable<IUser>((subscriber) => {
@@ -87,5 +112,25 @@ export class UserService {
     });
 
     return this.usersObservableCache[userId];
+  }
+
+  changePassword(oldPassword: string, newPassword: string, confirmPassword: string) {
+    return this.httpClient.put("http://localhost:8080/api/users/@me/password", {
+      oldPassword,
+      newPassword,
+      confirmPassword
+    }, {
+      headers: {
+        "Authorization": `Bearer ${this.token}`
+      }
+    });
+  }
+
+  updateMe(data: {email?: string, username?: string}) {
+    return this.httpClient.patch("http://localhost:8080/api/users/@me", data, {
+      headers: {
+        "Authorization": `Bearer ${this.token}`
+      }
+    });
   }
 }

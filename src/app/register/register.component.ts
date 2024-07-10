@@ -3,6 +3,7 @@ import {CourseComponent} from "../course/course.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-register',
@@ -26,9 +27,28 @@ export class RegisterComponent {
   username = new FormControl('');
   password = new FormControl('');
 
+  private userService: UserService;
+
+  constructor(userService: UserService) {
+    this.userService = userService;
+  }
+
+
+
   onSubmit(event: SubmitEvent) {
     event.preventDefault();
-    console.log(this.name.value, this.surname.value, this.email.value, this.username.value, this.password.value);
+
+    if(!this.name.value || !this.surname.value || !this.email.value || !this.username.value || !this.password.value
+    ) {
+      alert("All fields are required.");
+      return;
+    }
+
+    this.userService.register(this.name.value, this.surname.value, this.email.value, this.username.value, this.password.value).subscribe((resp) => {
+      console.log(resp);
+      alert("Registration successful.");
+    });
+
   }
 
 }

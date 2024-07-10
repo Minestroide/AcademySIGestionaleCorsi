@@ -23,7 +23,19 @@
 <div *ngIf="authorized" class="container p-3">
   <h2>Studenti iscritti ({{course?.userIds?.length}})</h2>
   <ul class="list-group">
-    <li *ngFor="let userId of course?.userIds" class="list-group-item">{{userCache[userId!]?.username}}</li>
+    <li *ngFor="let userId of course?.userIds" class="list-group-item">
+      <div class="d-flex flex-row align-items-center justify-content-start">
+        <span>{{userCache[userId!]?.username}}</span>
+        <div class="dropdown" style="margin-left: auto;">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Azioni
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdown">
+            <a class="dropdown-item" style="cursor: pointer;" (click)="this.deleteStudent($event, userId)">Espelli</a>
+          </div>
+        </div>
+      </div>
+    </li>
   </ul>
 </div>
 

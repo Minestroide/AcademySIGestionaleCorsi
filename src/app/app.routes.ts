@@ -11,6 +11,7 @@ import {CoursepostsComponent} from "./courseposts/courseposts.component";
 import {CoursestudentsComponent} from "./coursestudents/coursestudents.component";
 import {CoursetasksComponent} from "./coursetasks/coursetasks.component";
 import {ContactadminComponent} from "./contactadmin/contactadmin.component";
+import {ProfileeditComponent} from "./profileedit/profileedit.component";
 
 export const routes: Routes = [
 {
@@ -52,6 +53,10 @@ export const routes: Routes = [
 {
   path: 'contact',
   component: ContactpageComponent
+},
+{
+  path: 'profile',
+  component: ProfileeditComponent
 },
 {
   path: 'admin/contact',

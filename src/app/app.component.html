@@ -35,6 +35,7 @@
         <button class="btn btn-outline-success" type="submit" [routerLink]="'/login'">Login</button>
       </div>
       <div *ngIf="loggedInUser" class="d-flex flex-row gap-1">
+        <button class="btn btn-outline-secondary" type="submit" [routerLink]="['profile']">Profilo</button>
         <button class="btn btn-outline-danger" type="submit" (click)="logout($event)">Logout</button>
       </div>
     </div>
