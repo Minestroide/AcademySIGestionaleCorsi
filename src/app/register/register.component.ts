@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import {CourseComponent} from "../course/course.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {UserService} from "../services/user.service";
+import {catchError} from "rxjs";
 
 @Component({
   selector: 'app-register',
@@ -25,12 +26,14 @@ export class RegisterComponent {
   surname = new FormControl('');
   email = new FormControl('');
   username = new FormControl('');
-  password = new FormControl('');
+
+  private router: Router;
 
   private userService: UserService;
 
-  constructor(userService: UserService) {
+  constructor(userService: UserService, router: Router) {
     this.userService = userService;
+    this.router = router;
   }
 
 
@@ -38,15 +41,18 @@ export class RegisterComponent {
   onSubmit(event: SubmitEvent) {
     event.preventDefault();
 
-    if(!this.name.value || !this.surname.value || !this.email.value || !this.username.value || !this.password.value
+    if(!this.name.value || !this.surname.value || !this.email.value || !this.username.value
     ) {
       alert("All fields are required.");
       return;
     }
 
-    this.userService.register(this.name.value, this.surname.value, this.email.value, this.username.value, this.password.value).subscribe((resp) => {
-      console.log(resp);
-      alert("Registration successful.");
+    this.userService.register(this.username.value, this.email.value, this.name.value, this.surname.value).pipe(catchError(() => {
+      alert("An error occurred.");
+      return [];
+    })).subscribe((resp) => {
+      alert("Registration successful. An email with the password has been sent to the specified email address.");
+      this.router.navigateByUrl("/login");
     });
 
   }

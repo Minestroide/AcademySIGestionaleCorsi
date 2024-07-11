@@ -11,6 +11,10 @@ export interface IUser {
   roleIds: string[]
 }
 
+export interface LoginResponse {
+  token: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -65,11 +69,17 @@ export class UserService {
     return this.selfUserObservable;
   }
 
-  register(username: string, email: string, password: string, name: string, surname: string) {
+  login(email: string, password: string): Observable<LoginResponse> {
+    return this.httpClient.post<LoginResponse>("http://localhost:8080/api/auth/login", {
+      email,
+      password
+    }).pipe(share());
+  }
+
+  register(username: string, email: string, name: string, surname: string) {
     return this.httpClient.post("http://localhost:8080/api/users", {
       username,
       email,
-      password,
       name,
       surname
     });
