@@ -16,6 +16,13 @@
         Invalid credentials.
       </div>
     </div>
+    <div *ngIf="enableTwoFactorField" class="form-group">
+      <label for="codeInput">Codice di autenticazione a due fattori</label>
+      <input autocomplete="twoFactorCode" type="text" id="codeInput" class="form-control" [ngClass]="error ? 'is-invalid' : ''" placeholder="Inserisci qui la tua password" [formControl]="twoFactorCode">
+      <div id="codeInputFeedback" class="invalid-feedback">
+        Invalid credentials.
+      </div>
+    </div>
     <span>Password dimenticata? <a [routerLink]="'/passwordreset'">Clicca qui</a></span><br><br>
     <span>Non hai un account? <a [routerLink]="'/register'">Registrati qui</a></span>
     <div class="d-flex flex-row-reverse gap-1 mt-1">

@@ -8,7 +8,14 @@ export interface IUser {
   surname: string,
   username: string,
   id: string,
-  roleIds: string[]
+  roleIds: string[],
+  twoFactorEnabled: boolean
+}
+
+export interface QrData {
+  uri: string,
+  issuer: string,
+  secret: string
 }
 
 export interface LoginResponse {
@@ -69,10 +76,11 @@ export class UserService {
     return this.selfUserObservable;
   }
 
-  login(email: string, password: string): Observable<LoginResponse> {
+  login(email: string, password: string, twoFactorCode?: string): Observable<LoginResponse> {
     return this.httpClient.post<LoginResponse>("http://localhost:8080/api/auth/login", {
       email,
-      password
+      password,
+      twoFactorCode
     }).pipe(share());
   }
 
@@ -129,6 +137,35 @@ export class UserService {
       oldPassword,
       newPassword,
       confirmPassword
+    }, {
+      headers: {
+        "Authorization": `Bearer ${this.token}`
+      }
+    });
+  }
+
+  get2FASecret() {
+    return this.httpClient.get<QrData>("http://localhost:8080/api/users/@me/2faconfig", {
+      headers: {
+        "Authorization": `Bearer ${this.token}`
+      }
+    });
+  }
+
+  enable2FA(secret: string, code: string) {
+    return this.httpClient.put<void>("http://localhost:8080/api/users/@me/twoFactorCode", {
+      secret,
+      code
+    }, {
+      headers: {
+        "Authorization": `Bearer ${this.token}`
+      }
+    });
+  }
+
+  disable2FA(code: string) {
+    return this.httpClient.put<void>("http://localhost:8080/api/users/@me/twoFactorCode/disable", {
+      code
     }, {
       headers: {
         "Authorization": `Bearer ${this.token}`

@@ -29,9 +29,11 @@ export class LoginComponent {
 
   username = new FormControl('');
   password = new FormControl('');
+  enableTwoFactorField: boolean = false;
   error: string | undefined = undefined;
 
   private router: Router;
+  twoFactorCode: FormControl = new FormControl('');
 
   constructor(router: Router, userService: UserService) {
     this.router = router;
@@ -47,13 +49,18 @@ export class LoginComponent {
     }
     console.log(this.username.value, this.password.value);
 
-    this.userService.login(this.username.value, this.password.value).pipe(catchError(() => {
-      this.error = "Invalid credentials.";
-      return [];
-    })).subscribe((resp) => {
+    this.userService.login(this.username.value, this.password.value, this.twoFactorCode?.value).subscribe((resp) => {
       window.localStorage.setItem('token', resp.token);
       window.dispatchEvent(new CustomEvent("login"));
       this.router.navigateByUrl("/courses");
+    }, (err) => {
+      let error: any = err?.error;
+      let errorType: string = error?.type;
+      if(errorType == "TWO_FACTOR_CODE_NEEDED") {
+        this.enableTwoFactorField = true;
+      } else {
+        this.error = "Invalid credentials";
+      }
     });
   }
 

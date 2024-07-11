@@ -27,6 +27,8 @@ export class RegisterComponent {
   email = new FormControl('');
   username = new FormControl('');
 
+  loading: boolean = false;
+
   private router: Router;
 
   private userService: UserService;
@@ -47,11 +49,14 @@ export class RegisterComponent {
       return;
     }
 
+    this.loading = true;
     this.userService.register(this.username.value, this.email.value, this.name.value, this.surname.value).pipe(catchError(() => {
       alert("An error occurred.");
+      this.loading = false;
       return [];
     })).subscribe((resp) => {
       alert("Registration successful. An email with the password has been sent to the specified email address.");
+      this.loading = false;
       this.router.navigateByUrl("/login");
     });
 
