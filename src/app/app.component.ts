@@ -56,7 +56,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
       this.roleService.getRoles().subscribe((roles) => {
         console.info(roles);
-        this.isAdmin = roles.some((role) => role.type === "ADMIN");
+        let adminRoleIds = roles.filter((role) => role.type == "ADMIN").map((role) => role.id);
+        this.isAdmin = user.roleIds.some((roleId) => adminRoleIds.includes(roleId));
       });
     });
   }
