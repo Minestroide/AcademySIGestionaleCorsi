@@ -2,13 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {IUser, QrData, UserService} from "../services/user.service";
 import {NgIf} from "@angular/common";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {QrCodeModule} from "ng-qrcode";
 
 @Component({
   selector: 'app-profileedit',
   standalone: true,
   imports: [
     NgIf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    QrCodeModule
   ],
   templateUrl: './profileedit.component.html',
   styleUrl: './profileedit.component.css'
